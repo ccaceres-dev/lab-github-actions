@@ -10,3 +10,11 @@ spec:
       - name: glpi-container
         image: glpi:11.0.4
         # OJO: No definiremos resources aún para que falle la auditoría
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # ---------------------------
