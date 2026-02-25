@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glpi-prod
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: glpi-container
+        image: glpi:11.0.4
+        # OJO: No definiremos resources aún para que falle la auditoría
