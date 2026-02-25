@@ -2,14 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: glpi-prod
+  labels:
+    app: glpi-prod
 spec:
   replicas: 1
+  # --- ESTO ES LO QUE FALTABA ---
+  selector:
+    matchLabels:
+      app: glpi-prod
+  # ------------------------------
   template:
+    metadata:
+      labels:
+        app: glpi-prod
     spec:
       containers:
       - name: glpi-container
         image: glpi:11.0.4
-        # OJO: No definiremos resources aún para que falle la auditoría
         resources:
           requests:
             memory: "64Mi"
@@ -17,4 +26,3 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        # ---------------------------
