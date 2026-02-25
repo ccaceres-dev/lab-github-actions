@@ -21,8 +21,17 @@ jobs:
         run: python scripts/audit_k8s.py
         env:
           AUDITOR: ${{ github.actor }}
+  verificacion-post-deploy:
+    needs: auditoria
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ejecutar Test de Humo
+        run: python scripts/verify_deploy.py
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
 
-  # --- ETAPA 2: "CONSTRUCCIÓN" (Simulada) ---
+# --- ETAPA 2: "CONSTRUCCIÓN" (Simulada) ---
   build:
     needs: auditoria # Solo corre si la auditoría pasó
     runs-on: ubuntu-latest
