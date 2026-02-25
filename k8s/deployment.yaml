@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: glpi-prod
+  name: web-server
   labels:
-    app: glpi-prod
+    app: nginx-app
 spec:
-  replicas: 1
-  # --- ESTO ES LO QUE FALTABA ---
+  replicas: 2 # Probaremos con 2 para ver el escalado
   selector:
     matchLabels:
-      app: glpi-prod
-  # ------------------------------
+      app: nginx-app
   template:
     metadata:
       labels:
-        app: glpi-prod
+        app: nginx-app
     spec:
       containers:
-      - name: glpi-container
-        image: glpi:11.0.4
+      - name: nginx-main
+        image: nginx:latest
+        ports:
+        - containerPort: 80
         resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
           limits:
-            memory: "128Mi"
             cpu: "500m"
+            memory: "128Mi"
+          requests:
+            cpu: "250m"
+            memory: "64Mi"
